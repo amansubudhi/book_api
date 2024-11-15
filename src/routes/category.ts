@@ -53,25 +53,18 @@ router.post("/", async (req: Request<{}, {}, { name: string; description?: strin
     }
 })
 
-router.delete("/", async (req: any, res: any) => {
+router.delete("/:id", async (req: any, res: any) => {
     try {
-        const result = categorySchema.safeParse(req.body);
+        const id = req.params.id;
 
-        if (!result.success) {
-            return res.status(400).json({
-                message: "Invalid Inputs"
-            })
-        }
-        const { name, description } = req.body;
         const category = await prisma.category.findFirst({
             where: {
-                name,
-                description
+                id
             }
         })
 
         if (!category) {
-            return res.status(400).json({
+            return res.status(404).json({
                 message: "Category not found"
             })
         }

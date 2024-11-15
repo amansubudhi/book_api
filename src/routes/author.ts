@@ -53,23 +53,16 @@ router.post("/", async (req: Request<{}, {}, { name: string; bio?: string }>, re
 
 router.delete("/", async (req: any, res: any) => {
     try {
-        const result = authorSchema.safeParse(req.body);
+        const id = req.params.id;
 
-        if (!result.success) {
-            return res.status(400).json({
-                message: "Invalid Inputs"
-            })
-        }
-        const { name, bio } = req.body;
         const author = await prisma.author.findFirst({
             where: {
-                name,
-                bio
+                id
             }
         })
 
         if (!author) {
-            return res.status(400).json({
+            return res.status(404).json({
                 message: "Author not found"
             })
         }
