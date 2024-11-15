@@ -76,7 +76,7 @@ http://localhost:5000/api
   ```
 
   #### 2. Delete Category
-- **GET** `/categories/:id`
+- **DELETE** `/categories/:id`
 - **Response:**
   ```json
   {
